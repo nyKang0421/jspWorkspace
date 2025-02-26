@@ -1,6 +1,7 @@
 package kr.basic.member;
-
+//vo : value object : 테이블의 컬럼 정보 담은 객체 
 public class Member {
+
 	private int num;
 	private String id;
 	private String pass;
@@ -10,14 +11,7 @@ public class Member {
 	private String phone;
 	
 	
-	@Override
-	public String toString() {
-		return "Member [num=" + num + ", id=" + id + ", pass=" + pass + ", name=" + name + ", age=" + age + ", email="
-				+ email + ", phone=" + phone + "]";
-	}
-
 	public Member(int num, String id, String pass, String name, int age, String email, String phone) {
-		super();
 		this.num = num;
 		this.id = id;
 		this.pass = pass;
@@ -27,6 +21,16 @@ public class Member {
 		this.phone = phone;
 	}
 	
+	
+	
+	@Override
+	public String toString() {
+		return "Member [num=" + num + ", id=" + id + ", pass=" + pass + ", name=" + name + ", age=" + age + ", email="
+				+ email + ", phone=" + phone + "]";
+	}
+
+
+
 	public int getNum() {
 		return num;
 	}
@@ -70,5 +74,4 @@ public class Member {
 		this.phone = phone;
 	}
 	
-
 }
