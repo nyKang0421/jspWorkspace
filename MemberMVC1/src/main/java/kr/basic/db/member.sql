@@ -28,3 +28,10 @@ insert into member(id,pass,name,age,email,phone) values('test7','7777','테스�
 select*from member;
 
 select * from member where id='test1' and pass='1111';
+
+-- 번호가 3인 사람의 age 와 email, phone 번호 수정
+update member set age=32, email='test3@test.com', phone='010-1111-1236' where num=3;
+
+delete from member where num='10';
+
+select*from member where num = 3;

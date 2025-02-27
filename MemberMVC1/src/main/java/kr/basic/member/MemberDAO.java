@@ -44,6 +44,38 @@ public class MemberDAO {
 
 	}
 	
+	public ArrayList<Member> getAMemberInfo(int number) {
+		String sql = "select*from member where num = ?";
+		ArrayList<Member> alist = new ArrayList<Member>();
+		try {
+			getConnection(); // db 객체 생성 
+			ps= conn.prepareStatement(sql); // 쿼리 명령문 넣어주기 
+			ps.setInt(1, number);
+			rs = ps.executeQuery(); // select 문은 resultSet 객체를 리턴한다 
+			// rs.next() => 다음줄(row)이 없다면 false 있으면 true
+			
+			int num = rs.getInt("num");
+			String id = rs.getString("id");
+			String pass = rs.getString("pass");
+			String name = rs.getString("name");
+			int age = rs.getInt("age");
+			String emil = rs.getString("email");
+			String phone = rs.getString("phone");
+			
+			Member member = new Member(num, id, pass, name, age, emil, phone);
+			alist.add(member);
+			System.out.println(member);
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			dbClose();
+		}
+		
+		return alist;
+	}
+	
 	public ArrayList<Member> getMemberList(){
 		ArrayList<Member> list = new ArrayList<Member>();
 		String sql ="select * from member";
@@ -89,6 +121,7 @@ public class MemberDAO {
 			rs = ps.executeQuery(); // 
 			if(rs.next()) { // rs.next() 실행 쿼리 row 한줄 읽어옴
 				num = rs.getInt("num");
+				System.out.println("num :"+num);
 			}
 			
 			
@@ -99,6 +132,30 @@ public class MemberDAO {
 			dbClose();
 		}
 		return num!=0;
+	}
+	
+	public int deleteAMemberByNum(int num) {
+		String sql = "delete from member where num=?";
+		int rowCnt = 0;
+		
+		try {
+			getConnection(); // db 객체 생성 
+			ps = conn.prepareStatement(sql); // 쿼리객체 
+			// 미완성 쿼리 완성 
+			ps.setInt(1, num);
+			
+			// 쿼리문 
+			rowCnt = ps.executeUpdate();
+			
+			
+		} catch (SQLException e) {
+			System.out.println(" 멤버 삭제 실패");
+			e.printStackTrace();
+		}finally {
+			dbClose();
+		}
+		
+		return rowCnt;
 	}
 	
 // select => 테이블 수정 x , 결과테이블 나온다 
@@ -127,6 +184,31 @@ public class MemberDAO {
 			dbClose();
 		}
 		return rowCnt;
+	}
+	
+	public int updateAMemberByNum(int num, int age, String email, String phone) {
+		String sql =  "update member set age=?, email=?, phone=? where num=?";
+		int rowCnt = 0;
+		
+		try {
+			getConnection();
+			ps = conn.prepareStatement(sql);
+			
+			ps.setInt(1, age);
+			ps.setString(2, email);
+			ps.setString(3, phone);
+			ps.setInt(4, num);
+			
+			rowCnt = ps.executeUpdate();
+			
+		} catch (SQLException e) {
+			System.out.println(" 회원 추가 실패");
+			e.printStackTrace();
+		}finally {
+			dbClose();
+		}
+		
+		return rowCnt;		
 	}
 	
 	
